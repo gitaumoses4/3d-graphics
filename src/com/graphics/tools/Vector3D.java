@@ -42,16 +42,35 @@ public class Vector3D {
         this.z = z;
     }
 
+    public Vector3D transform(Matrix matrix) {
+        Matrix vectorMatrix;
+        if (matrix.getRows() == 4) {
+            vectorMatrix = toMatrix(true, 1);
+        } else {
+            vectorMatrix = toMatrix();
+        }
+        vectorMatrix = vectorMatrix.multiply(matrix);
+        return new Vector3D(vectorMatrix);
+    }
+
     public Matrix toMatrix() {
+        return this.toMatrix(false, 0);
+    }
+
+    public Matrix toMatrix(boolean addColumn, float value) {
+        if (addColumn) {
+            return new Matrix(1, 4, x, y, z, value);
+        }
         return new Matrix(1, 3, x, y, z);
     }
 
-    public Vector3D scale(float value) {
-        return new Vector3D(x * value, y * value, z * value);
-    }
 
     public Vector3D getProjected(int screenWidth, int screenHeight) {
         return TransformationMatrices.applyProjection(screenWidth, screenHeight, this);
     }
 
+    @Override
+    public String toString() {
+        return String.format("[%.2f, %.2f, %.2f]", x, y, z);
+    }
 }

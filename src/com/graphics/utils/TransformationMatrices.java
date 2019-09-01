@@ -2,13 +2,14 @@ package com.graphics.utils;
 
 import com.graphics.tools.Vector3D;
 
+
 public class TransformationMatrices {
     public static Matrix projection(int screenWidth, int screenHeight) {
         float fNear = 0.1f;
         float fFar = 1000.0f;
         float fFov = 90.0f;
         float fAspectRatio = (float) screenHeight / (float) screenWidth;
-        float fFovRad = 1.0f / (float) Math.tan(fFov * 0.5f / 180f * Math.PI);
+        float fFovRad = 1.0f / (float) Math.tan(Math.toRadians(fFov * 0.5f));
 
         return new Matrix(4, 4)
                 .set(0, 0, fAspectRatio * fFovRad)
@@ -18,8 +19,73 @@ public class TransformationMatrices {
                 .set(2, 3, 1.0f);
     }
 
+    public static Matrix scale(float value, Axis axis) {
+        Matrix m = Matrix.transformation();
+        switch (axis) {
+            case X:
+                m.set(0, 0, value);
+                break;
+            case Y:
+                m.set(1, 1, value);
+                break;
+            case Z:
+                m.set(2, 2, value);
+                break;
+        }
+        return m;
+    }
+
+    public static Matrix rotate(float angle, Axis axis) {
+        Matrix m = Matrix.transformation();
+        float cos = (float) Math.cos(Math.toRadians(angle));
+        float sin = (float) Math.sin(Math.toRadians(angle));
+        switch (axis) {
+            case X:
+                m.set(1, 1, cos);
+                m.set(1, 2, -sin);
+                m.set(2, 1, sin);
+                m.set(2, 2, cos);
+                break;
+            case Y:
+                m.set(0, 0, cos);
+                m.set(0, 2, sin);
+                m.set(2, 0, -sin);
+                m.set(2, 2, cos);
+                break;
+            case Z:
+                m.set(0, 0, cos);
+                m.set(0, 1, -sin);
+                m.set(1, 0, sin);
+                m.set(1, 1, cos);
+                break;
+        }
+        return m;
+    }
+
+    ;
+
+    public static Matrix translate(float value, Axis axis) {
+        Matrix m = Matrix.transformation();
+        m.set(0, 0, 1);
+        m.set(1, 1, 1);
+        m.set(2, 2, 1);
+        switch (axis) {
+            case X:
+                m.set(3, 0, value);
+                break;
+            case Y:
+                m.set(3, 1, value);
+                break;
+            case Z:
+                m.set(3, 2, value);
+                break;
+        }
+        return m;
+    }
+
+
     public static Vector3D applyProjection(int screenWidth, int screenHeight, Vector3D vector3D) {
-        Matrix vectorMatrix = new Matrix(1, 4, vector3D.getX(), vector3D.getY(), vector3D.getZ(), 1);
+        Matrix vectorMatrix = vector3D.toMatrix(true, 1);
         Matrix result = vectorMatrix.multiply(TransformationMatrices.projection(screenWidth, screenHeight));
 
 
@@ -31,5 +97,12 @@ public class TransformationMatrices {
             vector.setZ(vector.getZ() / w);
         }
         return vector;
+    }
+
+    public static Vector3D applyTranslation(float value, Axis axis, Vector3D vector) {
+        Matrix matrix = TransformationMatrices.translate(value, axis);
+
+        matrix = vector.toMatrix(true, value).multiply(matrix);
+        return new Vector3D(matrix);
     }
 }

@@ -1,6 +1,15 @@
 package com.graphics.tools;
 
+import com.graphics.utils.Axis;
+import com.graphics.utils.Matrix;
+import com.graphics.utils.TransformationMatrices;
+
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Triangle implements Paint {
     private final Vector3D vertices[] = new Vector3D[3];
@@ -11,12 +20,22 @@ public class Triangle implements Paint {
         this.vertices[2] = c;
     }
 
+    public Triangle(Vector3D... vertices) {
+        System.arraycopy(vertices, 0, this.vertices, 0, 3);
+    }
+
+    public Triangle(List<Vector3D> vertices) {
+        for (int i = 0; i < 3; i++) {
+            this.vertices[i] = vertices.get(i);
+        }
+    }
+
     public Triangle(float... points) {
         if (points.length != 9) {
             throw new IllegalArgumentException("The number of points should be equal to 9, 3 for each vector");
         }
-        for (int i = 0; i < points.length; i++) {
-            vertices[i / 3] = new Vector3D(points[i % 3], points[i % 3], points[i % 3]);
+        for (int i = 0; i < 3; i++) {
+            vertices[i] = new Vector3D(points[i * 3], points[i * 3 + 1], points[i * 3 + 2]);
         }
     }
 
@@ -32,35 +51,29 @@ public class Triangle implements Paint {
         return vertices[index];
     }
 
-    public Triangle scale(float value) {
-        return new Triangle(
-                vertices[0].scale(value),
-                vertices[1].scale(value),
-                vertices[2].scale(value)
-        );
+    public Triangle transform(Matrix matrix) {
+        List<Vector3D> vertices = Stream.of(this.vertices)
+                .map(vector3D -> {
+                    return vector3D.transform(matrix);
+                }).collect(Collectors.toList());
+        return new Triangle(vertices);
     }
-
-    public Triangle getProjected(int screenWidth, int screenHeight) {
-        return new Triangle(
-                vertices[0].getProjected(screenWidth, screenHeight),
-                vertices[1].getProjected(screenWidth, screenHeight),
-                vertices[2].getProjected(screenWidth, screenHeight)
-        );
-    }
-
 
     @Override
     public void draw(Graphics2D g, int screenWidth, int screenHeight) {
-        Triangle projected = getProjected(screenWidth, screenHeight);
-        projected = projected.scale(50);
-        int[] xPoints = new int[3];
-        int[] yPoints = new int[3];
-        Vector3D vertices[] = projected.getVertices();
+        Vector3D[] vertices = this.getVertices();
+        Polygon p = new Polygon();
         for (int i = 0; i < 3; i++) {
-            xPoints[i] = (int) vertices[i].getX();
-            yPoints[i] = (int) vertices[i].getY();
+            Vector3D vertex = TransformationMatrices.applyTranslation(2, Axis.Z, vertices[i]);
+            vertex = TransformationMatrices.applyProjection(screenWidth, screenHeight, vertex);
+            p.addPoint((int) vertex.getX(), (int) vertex.getY());
         }
         g.setColor(Color.WHITE);
-        g.drawPolygon(new int[]{10, 20, 30}, new int[]{10, 20, 30}, 3);
+        g.drawPolygon(p);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s, %s, %s]", vertices[0], vertices[1], vertices[2]);
     }
 }

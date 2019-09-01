@@ -4,11 +4,48 @@ public class Matrix {
 
     private float[][] matrix;
     private int rows, cols;
+    boolean right = false;
 
     public Matrix(int rows, int cols) {
         matrix = new float[rows][cols];
         this.rows = rows;
         this.cols = cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public static Matrix identity(int m) {
+        Matrix matrix = new Matrix(m, m);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == j) {
+                    matrix.set(i, j, 1);
+                }
+            }
+        }
+        return matrix;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public boolean fromRight() {
+        return this.right;
+    }
+
+    public static Matrix transformation() {
+        Matrix m = Matrix.identity(4);
+        for (int i = 0; i < 4; i++) {
+            m.set(i, 3, 1);
+        }
+        return m;
     }
 
     public Matrix(int rows, int cols, float... values) {
@@ -43,7 +80,7 @@ public class Matrix {
         int p = another.cols;
 
         if (n != _n) {
-            throw new IllegalArgumentException("Matrix rows and columns do not match");
+            throw new IllegalArgumentException("Matrix rows and columns do not match\n" + this + " and " + another);
         }
         Matrix result = new Matrix(m, p);
         for (int i = 0; i < m; i++) {
