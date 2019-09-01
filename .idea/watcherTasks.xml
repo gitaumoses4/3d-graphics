@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectTasksOptions">
+    <TaskOptions isEnabled="false">
+      <option name="arguments" value="-javaagent:/opt/idea-IU-192.6262.58/lib/idea_rt.jar=41615:/opt/idea-IU-192.6262.58/bin -Dfile.encoding=UTF-8 -classpath /home/moses/Work/CodingChallenges/3DGraphics/out/production/3DGraphics com.graphics.Main" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="java" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="Java Hot Reload" />
+      <option name="output" value="" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java" />
+      <option name="runOnExternalChanges" value="true" />
+      <option name="scopeName" value="All Places" />
+      <option name="trackOnlyRoot" value="false" />
+      <option name="workingDir" value="" />
+      <envs />
+    </TaskOptions>
+  </component>
+</project>
