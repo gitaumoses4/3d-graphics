@@ -11,6 +11,8 @@ import com.graphics.events.MouseInfoListener;
 import com.graphics.tools.Camera;
 import com.graphics.tools.LightSource;
 import com.graphics.tools.Paint;
+import com.graphics.utils.Axis;
+import com.graphics.utils.TransformationMatrices;
 
 import java.util.TimerTask;
 
@@ -84,6 +86,7 @@ public class Canvas extends JComponent implements MouseInfoListener {
         if (data.type == MouseData.Type.ZOOM_IN || data.type == MouseData.Type.ZOOM_OUT) {
             float value = 0.1f;
             this.zoomLevel += data.type == MouseData.Type.ZOOM_IN ? value : -value;
+        }else if(data.type == MouseData.Type.DRAG){
         }
     }
 

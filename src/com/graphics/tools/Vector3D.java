@@ -76,6 +76,12 @@ public class Vector3D {
         );
     }
 
+    public void set(Vector3D newVector) {
+        this.x = newVector.x;
+        this.y = newVector.y;
+        this.z = newVector.z;
+    }
+
     public Vector3D add(Vector3D another) {
         return new Vector3D(
                 this.x + another.x,

@@ -59,12 +59,7 @@ public class Triangle implements Paint {
     public Triangle translateTo(float x, float y, float z) {
         return new Triangle(
                 Stream.of(vertices).map(vector3D -> {
-                    Matrix translationMatrix = Matrix.identity(4);
-                    translationMatrix = translationMatrix.multiply(TransformationMatrices.translate(x, Axis.X));
-                    translationMatrix = translationMatrix.multiply(TransformationMatrices.translate(y, Axis.Y));
-                    translationMatrix = translationMatrix.multiply(TransformationMatrices.translate(z, Axis.Z));
-                    Matrix matrix = translationMatrix.multiply(vector3D.toMatrix(true, 1).transpose());
-                    return new Vector3D(matrix.transpose());
+                    return TransformationMatrices.applyTranslation(x, y, z, vector3D);
                 }).collect(Collectors.toList())
         );
     }

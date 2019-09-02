@@ -99,4 +99,13 @@ public class TransformationMatrices {
         }
         return vector;
     }
+
+    public static Vector3D applyTranslation(float x, float y, float z, Vector3D vector) {
+        Matrix translationMatrix = Matrix.identity(4);
+        translationMatrix = translationMatrix.multiply(TransformationMatrices.translate(x, Axis.X));
+        translationMatrix = translationMatrix.multiply(TransformationMatrices.translate(y, Axis.Y));
+        translationMatrix = translationMatrix.multiply(TransformationMatrices.translate(z, Axis.Z));
+        Matrix matrix = translationMatrix.multiply(vector.toMatrix(true, 1).transpose());
+        return new Vector3D(matrix.transpose());
+    }
 }
