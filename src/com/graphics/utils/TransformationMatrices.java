@@ -4,10 +4,10 @@ import com.graphics.tools.Vector3D;
 
 
 public class TransformationMatrices {
-    public static Matrix projection(int screenWidth, int screenHeight) {
+    public static Matrix projection(int screenWidth, int screenHeight, int zoomLevel) {
         float fNear = 0.1f;
         float fFar = 1000.0f;
-        float fFov = 90.0f;
+        float fFov = 90.0f / (zoomLevel + 1);
         float fAspectRatio = (float) screenHeight / (float) screenWidth;
         float fFovRad = 1.0f / (float) Math.tan(Math.toRadians(fFov * 0.5f));
 
@@ -65,28 +65,28 @@ public class TransformationMatrices {
     ;
 
     public static Matrix translate(float value, Axis axis) {
-        Matrix m = Matrix.transformation();
+        Matrix m = Matrix.identity(4);
         m.set(0, 0, 1);
         m.set(1, 1, 1);
         m.set(2, 2, 1);
         switch (axis) {
             case X:
-                m.set(3, 0, value);
+                m.set(0, 3, value);
                 break;
             case Y:
-                m.set(3, 1, value);
+                m.set(1, 3, value);
                 break;
             case Z:
-                m.set(3, 2, value);
+                m.set(2, 3, value);
                 break;
         }
         return m;
     }
 
 
-    public static Vector3D applyProjection(int screenWidth, int screenHeight, Vector3D vector3D) {
+    public static Vector3D applyProjection(int screenWidth, int screenHeight, int zoomLevel, Vector3D vector3D) {
         Matrix vectorMatrix = vector3D.toMatrix(true, 1);
-        Matrix result = vectorMatrix.multiply(TransformationMatrices.projection(screenWidth, screenHeight));
+        Matrix result = vectorMatrix.multiply(TransformationMatrices.projection(screenWidth, screenHeight, zoomLevel));
 
 
         Vector3D vector = new Vector3D(result.get(0, 0), result.get(0, 1), result.get(0, 2));
@@ -97,12 +97,5 @@ public class TransformationMatrices {
             vector.setZ(vector.getZ() / w);
         }
         return vector;
-    }
-
-    public static Vector3D applyTranslation(float value, Axis axis, Vector3D vector) {
-        Matrix matrix = TransformationMatrices.translate(value, axis);
-
-        matrix = vector.toMatrix(true, value).multiply(matrix);
-        return new Vector3D(matrix);
     }
 }

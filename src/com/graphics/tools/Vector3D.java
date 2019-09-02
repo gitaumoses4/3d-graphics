@@ -64,9 +64,32 @@ public class Vector3D {
         return new Matrix(1, 3, x, y, z);
     }
 
+    public Vector3D subtract(Vector3D another) {
+        return new Vector3D(
+                this.x - another.x,
+                this.y - another.y,
+                this.z - another.z
+        );
+    }
 
-    public Vector3D getProjected(int screenWidth, int screenHeight) {
-        return TransformationMatrices.applyProjection(screenWidth, screenHeight, this);
+    public Vector3D add(Vector3D another) {
+        return new Vector3D(
+                this.x + another.x,
+                this.y + another.y,
+                this.z + another.z
+        );
+    }
+
+    public Vector3D cross(Vector3D another) {
+        return new Vector3D(
+                this.y * another.z - this.z * another.y,
+                this.z * another.z - this.x * another.z,
+                this.x * another.y - this.y * another.x
+        );
+    }
+
+    public float magnitude() {
+        return (float) Math.sqrt(x * x + y * y + z * z);
     }
 
     @Override

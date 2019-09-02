@@ -8,12 +8,11 @@ import java.util.Arrays;
 
 public class Mesh implements Paint {
     private ArrayList<Triangle> triangles;
-    private Matrix transformationLeft = Matrix.transformation();
-    private Matrix transformationRight = Matrix.transformation();
+    private Matrix transformation = Matrix.transformation();
+    private float translateX, translateY, translateZ;
 
     public Mesh(ArrayList<Triangle> triangles) {
         this.triangles = new ArrayList<>(triangles);
-        this.transformationRight.setRight(true);
     }
 
     public Mesh(Triangle... triangles) {
@@ -40,24 +39,32 @@ public class Mesh implements Paint {
         this.triangles.remove(index);
     }
 
-    public void clearTransformation(){
-        this.transformationRight = Matrix.transformation();
-        this.transformationLeft = Matrix.transformation();
+    public void clearTransformation() {
+        this.transformation = Matrix.transformation();
     }
+
     public void addTransformation(Matrix matrix) {
-        if (matrix.fromRight()) {
-            this.transformationRight = this.transformationRight.multiply(matrix);
-        } else {
-            this.transformationLeft = this.transformationLeft.multiply(matrix);
-        }
+        this.transformation = this.transformation.multiply(matrix);
+    }
+
+    public void setTranslateX(float translateX) {
+        this.translateX = translateX;
+    }
+
+    public void setTranslateY(float translateY) {
+        this.translateY = translateY;
+    }
+
+    public void setTranslateZ(float translateZ) {
+        this.translateZ = translateZ;
     }
 
     @Override
-    public void draw(Graphics2D g, int screenWidth, int screenHeight) {
+    public void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel) {
         for (Triangle triangle : triangles) {
-            Triangle transformed = triangle.transform(this.transformationRight);
-            transformed = transformed.transform(transformationLeft);
-            transformed.draw(g, screenWidth, screenHeight);
+            Triangle transformed = triangle.transform(this.transformation);
+            Triangle translated = transformed.translateTo(translateX, translateY, translateZ);
+            translated.draw(g, screenWidth, screenHeight, zoomLevel);
         }
     }
 }

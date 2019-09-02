@@ -1,12 +1,13 @@
 package com.graphics.ui;
 
+import com.graphics.events.MouseInfoListener;
 import com.graphics.tools.Mesh;
 import com.graphics.tools.Paint;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public abstract class Object implements Paint {
+public abstract class Object implements Paint, MouseInfoListener {
     private ArrayList<Mesh> meshes = new ArrayList<>();
 
     public Object() {
@@ -32,9 +33,9 @@ public abstract class Object implements Paint {
     }
 
     @Override
-    public void draw(Graphics2D g, int screenWidth, int screenHeight) {
+    public void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel) {
         for (Mesh m : meshes) {
-            m.draw(g, screenWidth, screenHeight);
+            m.draw(g, screenWidth, screenHeight, zoomLevel);
         }
     }
 }

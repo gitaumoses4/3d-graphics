@@ -48,6 +48,16 @@ public class Matrix {
         return m;
     }
 
+    public Matrix transpose() {
+        Matrix m = new Matrix(cols, rows);
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                m.set(i, j, matrix[j][i]);
+            }
+        }
+        return m;
+    }
+
     public Matrix(int rows, int cols, float... values) {
         this(rows, cols);
         for (int i = 0; i < values.length; i++) {
