@@ -9,6 +9,7 @@ import com.graphics.events.CustomMouseListener;
 import com.graphics.events.MouseData;
 import com.graphics.events.MouseInfoListener;
 import com.graphics.tools.Camera;
+import com.graphics.tools.LightSource;
 import com.graphics.tools.Paint;
 
 import java.util.TimerTask;
@@ -20,6 +21,7 @@ public class Canvas extends JComponent implements MouseInfoListener {
     private final CustomMouseListener customMouseListener;
     private float zoomLevel;
     private Camera camera;
+    private LightSource lightSource;
 
     public Canvas() {
         objects = new ArrayList<>();
@@ -46,6 +48,11 @@ public class Canvas extends JComponent implements MouseInfoListener {
         this.customMouseListener.addMouseInfoListener(mouseInfoListener);
     }
 
+
+    public void setLightSource(LightSource lightSource) {
+        this.lightSource = lightSource;
+    }
+
     public ArrayList<Object> getObjects() {
         return objects;
     }
@@ -67,19 +74,20 @@ public class Canvas extends JComponent implements MouseInfoListener {
             drawingParams.screenHeight = getHeight();
             drawingParams.screenWidth = getWidth();
             drawingParams.zoomLevel = zoomLevel;
+            drawingParams.lightSource = lightSource;
             objects.get(i).draw(drawingParams);
         }
     }
 
     @Override
     public void onMouseEvent(MouseData data) {
-        if( data.type == MouseData.Type.ZOOM_IN || data.type == MouseData.Type.ZOOM_OUT){
+        if (data.type == MouseData.Type.ZOOM_IN || data.type == MouseData.Type.ZOOM_OUT) {
             float value = 0.1f;
             this.zoomLevel += data.type == MouseData.Type.ZOOM_IN ? value : -value;
         }
     }
 
     public void setCamera(Camera camera) {
-       this.camera = camera;
+        this.camera = camera;
     }
 }

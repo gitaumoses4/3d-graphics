@@ -11,5 +11,6 @@ public interface Paint {
         public int screenWidth;
         public int screenHeight;
         public float zoomLevel;
+        public LightSource lightSource;
     }
 }

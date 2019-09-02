@@ -1,6 +1,5 @@
 package com.graphics.events;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -66,7 +65,7 @@ public class CustomMouseListener implements MouseListener, MouseMotionListener, 
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
-        int value = mouseWheelEvent.getWheelRotation();
+        int value = mouseWheelEvent.getUnitsToScroll();
         MouseData mouseData = new MouseData();
         mouseData.zoom = value;
         mouseData.type = value < 0 ? MouseData.Type.ZOOM_IN : MouseData.Type.ZOOM_OUT;

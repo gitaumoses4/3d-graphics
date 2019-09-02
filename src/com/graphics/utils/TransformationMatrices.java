@@ -90,7 +90,7 @@ public class TransformationMatrices {
         Matrix result = vectorMatrix.multiply(TransformationMatrices.projection(drawingParams));
 
 
-        Vector3D vector = new Vector3D(result.get(0, 0), result.get(0, 1), result.get(0, 2));
+        Vector3D vector = new Vector3D(result);
         float w = result.get(0, 3);
         if (w != 0.0f) {
             vector.setX(vector.getX() / w);

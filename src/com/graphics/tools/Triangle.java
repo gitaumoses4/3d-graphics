@@ -51,9 +51,8 @@ public class Triangle implements Paint {
 
     public Triangle transform(Matrix matrix) {
         List<Vector3D> vertices = Stream.of(this.vertices)
-                .map(vector3D -> {
-                    return vector3D.transform(matrix);
-                }).collect(Collectors.toList());
+                .map(vector3D -> vector3D.transform(matrix))
+                .collect(Collectors.toList());
         return new Triangle(vertices);
     }
 
@@ -72,9 +71,9 @@ public class Triangle implements Paint {
 
     public Triangle getProjected(DrawingParams drawingParams) {
         return new Triangle(
-                Stream.of(this.vertices).map(vector -> {
-                    return TransformationMatrices.applyProjection(drawingParams, vector);
-                }).collect(Collectors.toList())
+                Stream.of(this.vertices)
+                        .map(vector -> TransformationMatrices.applyProjection(drawingParams, vector)
+                        ).collect(Collectors.toList())
         );
     }
 
@@ -83,19 +82,27 @@ public class Triangle implements Paint {
         Vector3D line1 = vertices[1].subtract(vertices[0]);
         Vector3D line2 = vertices[2].subtract(vertices[0]);
         Vector3D normal = line1.cross(line2);
+
         float length = normal.magnitude();
+
         normal = normal.scale(1.0f / length);
+
         float value = normal.dot(vertices[0].subtract(drawingParams.camera));
+
+
         if (value < 0) {
+            float lightValue = drawingParams.lightSource.dot(vertices[0]);
+            System.out.println(lightValue);
             Triangle projected = this.getProjected(drawingParams);
             Vector3D[] vertices = projected.getVertices();
             Polygon p = new Polygon();
+
             for (Vector3D vertex : vertices) {
-                p.addPoint((int) vertex.getX(), (int) vertex.getY());
+                p.addPoint(Math.round(vertex.getX()), Math.round(vertex.getY()));
             }
 
             drawingParams.g.setColor(Color.WHITE);
-            drawingParams.g.drawPolygon(p);
+            drawingParams.g.fillPolygon(p);
         }
     }
 
