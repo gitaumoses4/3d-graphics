@@ -87,7 +87,7 @@ public class Vector3D {
     public Vector3D cross(Vector3D another) {
         return new Vector3D(
                 this.y * another.z - this.z * another.y,
-                this.z * another.z - this.x * another.z,
+                this.z * another.x - this.x * another.z,
                 this.x * another.y - this.y * another.x
         );
     }

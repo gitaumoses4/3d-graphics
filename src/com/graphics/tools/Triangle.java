@@ -87,12 +87,15 @@ public class Triangle implements Paint {
 
         normal = normal.scale(1.0f / length);
 
-        float value = normal.dot(vertices[0].subtract(drawingParams.camera));
-
+        float value = normal.dot(vertices[2].subtract(drawingParams.camera));
 
         if (value < 0) {
-            float lightValue = drawingParams.lightSource.dot(vertices[0]);
-            System.out.println(lightValue);
+            float lightLength = drawingParams.lightSource.magnitude();
+
+            Vector3D lightSource = drawingParams.lightSource.scale(1 / lightLength);
+
+            int lightValue = Math.round(Math.min(Math.abs(255 / lightSource.dot(vertices[0])), 255));
+
             Triangle projected = this.getProjected(drawingParams);
             Vector3D[] vertices = projected.getVertices();
             Polygon p = new Polygon();
@@ -101,7 +104,8 @@ public class Triangle implements Paint {
                 p.addPoint(Math.round(vertex.getX()), Math.round(vertex.getY()));
             }
 
-            drawingParams.g.setColor(Color.WHITE);
+            drawingParams.g.setColor(new Color(lightValue, lightValue, lightValue));
+//            drawingParams.g.drawPolygon(p);
             drawingParams.g.fillPolygon(p);
         }
     }

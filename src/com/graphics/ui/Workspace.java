@@ -1,6 +1,7 @@
 package com.graphics.ui;
 
 import com.graphics.primitives.Cube;
+import com.graphics.primitives.Sphere;
 import com.graphics.tools.Camera;
 import com.graphics.tools.LightSource;
 
@@ -8,6 +9,7 @@ public class Workspace {
 
     private final Canvas canvas;
     private final Cube cube;
+    private final Object sphere;
     private final Camera camera;
     private final LightSource lightSource;
 
@@ -16,6 +18,7 @@ public class Workspace {
         camera = new Camera(0, 0, 0);
         lightSource = new LightSource(0, 0, -40f);
         cube = new Cube();
+        sphere = new Sphere();
 
 
         canvas.setCamera(camera);
@@ -28,6 +31,7 @@ public class Workspace {
     }
 
     public void draw() {
-        canvas.addObject(cube);
+//        canvas.addObject(cube);
+        canvas.addObject(sphere);
     }
 }

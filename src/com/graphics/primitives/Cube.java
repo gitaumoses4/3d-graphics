@@ -10,56 +10,35 @@ import com.graphics.utils.TransformationMatrices;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Cube extends Object {
+public class Cube extends BasePrimitive {
 
-    private Mesh m;
-    private float yRotate = 40, xRotate = 0;
 
     @Override
-    public void initialize() {
-        this.m = new Mesh(
-                // south
-                new Triangle(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f),
-                new Triangle(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f),
-                // east
-                new Triangle(1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f),
-                new Triangle(1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f),
-                // north
-                new Triangle(1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f),
-                new Triangle(1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-                // west
-                new Triangle(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f),
-                new Triangle(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                // top
-                new Triangle(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
-                new Triangle(0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
-                // bottom
-                new Triangle(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
-                new Triangle(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f)
+    public ArrayList<Triangle> initialize() {
+        return new ArrayList<>(
+                Arrays.asList(
+                        // south
+                        new Triangle(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                        new Triangle(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+                        // east
+                        new Triangle(1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+                        new Triangle(1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f),
+                        // north
+                        new Triangle(1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+                        new Triangle(1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+                        // west
+                        new Triangle(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f),
+                        new Triangle(0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                        // top
+                        new Triangle(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+                        new Triangle(0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f),
+                        // bottom
+                        new Triangle(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
+                        new Triangle(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f)
 
+                )
         );
-        this.addMesh(m);
-    }
-
-    @Override
-    public void draw(DrawingParams drawingParams) {
-        super.draw(drawingParams);
-
-        m.clearTransformation();
-        m.addTransformation(TransformationMatrices.rotate(yRotate, Axis.Y));
-        m.addTransformation(TransformationMatrices.rotate(xRotate, Axis.X));
-        m.addTransformation(TransformationMatrices.scale(drawingParams.screenWidth / 2f, Axis.X));
-        m.addTransformation(TransformationMatrices.scale(drawingParams.screenHeight / 2f, Axis.Y));
-        m.addTransformation(TransformationMatrices.scale(2f, Axis.Z));
-        m.setTranslateZ(5f);
-        yRotate += 1;
-        xRotate += 1.2f;
-    }
-
-    @Override
-    public void onMouseEvent(MouseData data) {
-        yRotate -= data.diffX;
-        xRotate += data.diffY;
     }
 }

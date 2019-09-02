@@ -23,6 +23,10 @@ public class Mesh implements Paint {
         return triangles;
     }
 
+    public void addTriangles(ArrayList<Triangle> triangles) {
+        this.triangles.addAll(triangles);
+    }
+
     public void setTriangles(ArrayList<Triangle> triangles) {
         this.triangles = new ArrayList<>(triangles);
     }

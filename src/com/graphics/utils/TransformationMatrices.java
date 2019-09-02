@@ -7,7 +7,7 @@ import com.graphics.tools.Vector3D;
 public class TransformationMatrices {
     public static Matrix projection(Paint.DrawingParams drawingParams) {
         float fNear = 0.1f;
-        float fFar = 1000.0f;
+        float fFar = 10000.0f;
         float fFov = 90.0f / (drawingParams.zoomLevel + 1);
         float fAspectRatio = (float) drawingParams.screenHeight / (float) drawingParams.screenWidth;
         float fFovRad = 1.0f / (float) Math.tan(Math.toRadians(fFov * 0.5f));
