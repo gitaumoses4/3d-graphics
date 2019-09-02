@@ -1,6 +1,7 @@
 package com.graphics.ui;
 
 import com.graphics.events.MouseInfoListener;
+import com.graphics.tools.Camera;
 import com.graphics.tools.Mesh;
 import com.graphics.tools.Paint;
 
@@ -33,9 +34,9 @@ public abstract class Object implements Paint, MouseInfoListener {
     }
 
     @Override
-    public void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel) {
+    public void draw(DrawingParams drawingParams) {
         for (Mesh m : meshes) {
-            m.draw(g, screenWidth, screenHeight, zoomLevel);
+            m.draw(drawingParams);
         }
     }
 }

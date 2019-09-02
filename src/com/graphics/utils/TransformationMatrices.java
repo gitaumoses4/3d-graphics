@@ -1,14 +1,15 @@
 package com.graphics.utils;
 
+import com.graphics.tools.Paint;
 import com.graphics.tools.Vector3D;
 
 
 public class TransformationMatrices {
-    public static Matrix projection(int screenWidth, int screenHeight, int zoomLevel) {
+    public static Matrix projection(Paint.DrawingParams drawingParams) {
         float fNear = 0.1f;
         float fFar = 1000.0f;
-        float fFov = 90.0f / (zoomLevel + 1);
-        float fAspectRatio = (float) screenHeight / (float) screenWidth;
+        float fFov = 90.0f / (drawingParams.zoomLevel + 1);
+        float fAspectRatio = (float) drawingParams.screenHeight / (float) drawingParams.screenWidth;
         float fFovRad = 1.0f / (float) Math.tan(Math.toRadians(fFov * 0.5f));
 
         return new Matrix(4, 4)
@@ -84,9 +85,9 @@ public class TransformationMatrices {
     }
 
 
-    public static Vector3D applyProjection(int screenWidth, int screenHeight, int zoomLevel, Vector3D vector3D) {
+    public static Vector3D applyProjection(Paint.DrawingParams drawingParams, Vector3D vector3D) {
         Matrix vectorMatrix = vector3D.toMatrix(true, 1);
-        Matrix result = vectorMatrix.multiply(TransformationMatrices.projection(screenWidth, screenHeight, zoomLevel));
+        Matrix result = vectorMatrix.multiply(TransformationMatrices.projection(drawingParams));
 
 
         Vector3D vector = new Vector3D(result.get(0, 0), result.get(0, 1), result.get(0, 2));

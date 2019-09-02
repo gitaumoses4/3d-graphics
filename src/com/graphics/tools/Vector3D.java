@@ -53,6 +53,10 @@ public class Vector3D {
         return new Vector3D(vectorMatrix);
     }
 
+    public Vector3D scale(float value) {
+        return new Vector3D(toMatrix().multiply(value));
+    }
+
     public Matrix toMatrix() {
         return this.toMatrix(false, 0);
     }
@@ -90,6 +94,10 @@ public class Vector3D {
 
     public float magnitude() {
         return (float) Math.sqrt(x * x + y * y + z * z);
+    }
+
+    public float dot(Vector3D another) {
+        return x * another.x + y * another.y + z * another.z;
     }
 
     @Override

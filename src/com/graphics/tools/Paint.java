@@ -3,5 +3,13 @@ package com.graphics.tools;
 import java.awt.Graphics2D;
 
 public interface Paint {
-    void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel);
+    void draw(DrawingParams drawingParams);
+
+    public class DrawingParams {
+        public Camera camera;
+        public Graphics2D g;
+        public int screenWidth;
+        public int screenHeight;
+        public float zoomLevel;
+    }
 }

@@ -66,7 +66,7 @@ public class CustomMouseListener implements MouseListener, MouseMotionListener, 
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
-        int value = mouseWheelEvent.getUnitsToScroll();
+        int value = mouseWheelEvent.getWheelRotation();
         MouseData mouseData = new MouseData();
         mouseData.zoom = value;
         mouseData.type = value < 0 ? MouseData.Type.ZOOM_IN : MouseData.Type.ZOOM_OUT;

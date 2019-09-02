@@ -70,31 +70,32 @@ public class Triangle implements Paint {
         );
     }
 
-    public Triangle getProjected(int screenWidth, int screenHeight, int zoomLevel) {
+    public Triangle getProjected(DrawingParams drawingParams) {
         return new Triangle(
                 Stream.of(this.vertices).map(vector -> {
-                    return TransformationMatrices.applyProjection(screenWidth, screenHeight, zoomLevel, vector);
+                    return TransformationMatrices.applyProjection(drawingParams, vector);
                 }).collect(Collectors.toList())
         );
     }
 
     @Override
-    public void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel) {
+    public void draw(DrawingParams drawingParams) {
         Vector3D line1 = vertices[1].subtract(vertices[0]);
         Vector3D line2 = vertices[2].subtract(vertices[0]);
         Vector3D normal = line1.cross(line2);
         float length = normal.magnitude();
-
-        if (normal.getZ() < 0) {
-            Triangle projected = this.getProjected(screenWidth, screenHeight, zoomLevel);
+        normal = normal.scale(1.0f / length);
+        float value = normal.dot(vertices[0].subtract(drawingParams.camera));
+        if (value < 0) {
+            Triangle projected = this.getProjected(drawingParams);
             Vector3D[] vertices = projected.getVertices();
             Polygon p = new Polygon();
             for (Vector3D vertex : vertices) {
                 p.addPoint((int) vertex.getX(), (int) vertex.getY());
             }
 
-            g.setColor(Color.WHITE);
-            g.drawPolygon(p);
+            drawingParams.g.setColor(Color.WHITE);
+            drawingParams.g.drawPolygon(p);
         }
     }
 

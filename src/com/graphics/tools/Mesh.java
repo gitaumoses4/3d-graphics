@@ -60,11 +60,11 @@ public class Mesh implements Paint {
     }
 
     @Override
-    public void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel) {
+    public void draw(DrawingParams drawingParams) {
         for (Triangle triangle : triangles) {
             Triangle transformed = triangle.transform(this.transformation);
             Triangle translated = transformed.translateTo(translateX, translateY, translateZ);
-            translated.draw(g, screenWidth, screenHeight, zoomLevel);
+            translated.draw(drawingParams);
         }
     }
 }

@@ -43,14 +43,14 @@ public class Cube extends Object {
     }
 
     @Override
-    public void draw(Graphics2D g, int screenWidth, int screenHeight, int zoomLevel) {
-        super.draw(g, screenWidth, screenHeight, zoomLevel);
+    public void draw(DrawingParams drawingParams) {
+        super.draw(drawingParams);
 
         m.clearTransformation();
         m.addTransformation(TransformationMatrices.rotate(yRotate, Axis.Y));
         m.addTransformation(TransformationMatrices.rotate(xRotate, Axis.X));
-        m.addTransformation(TransformationMatrices.scale(screenWidth / 2f, Axis.X));
-        m.addTransformation(TransformationMatrices.scale(screenHeight / 2f, Axis.Y));
+        m.addTransformation(TransformationMatrices.scale(drawingParams.screenWidth / 2f, Axis.X));
+        m.addTransformation(TransformationMatrices.scale(drawingParams.screenHeight / 2f, Axis.Y));
         m.addTransformation(TransformationMatrices.scale(2f, Axis.Z));
         m.setTranslateZ(5f);
         yRotate += 1;
