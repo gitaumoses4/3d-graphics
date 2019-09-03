@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Triangle implements Paint {
+public class Triangle implements Paint, Comparable<Triangle> {
     private final Vector3D[] vertices = new Vector3D[3];
 
     public Triangle(Vector3D a, Vector3D b, Vector3D c) {
@@ -80,7 +80,9 @@ public class Triangle implements Paint {
 
         float length = normal.magnitude();
 
-        normal = normal.scale(1.0f / length);
+        if (length != 0) {
+            normal = normal.scale(1.0f / length);
+        }
 
         float value = normal.dot(vertices[2].subtract(drawingParams.camera));
 
@@ -108,5 +110,14 @@ public class Triangle implements Paint {
     @Override
     public String toString() {
         return String.format("[%s, %s, %s]", vertices[0], vertices[1], vertices[2]);
+    }
+
+    public float getCenterZ() {
+        return (vertices[0].getZ() + vertices[1].getZ() + vertices[2].getZ()) / 3f;
+    }
+
+    @Override
+    public int compareTo(Triangle o) {
+        return Float.compare(o.getCenterZ(), this.getCenterZ());
     }
 }

@@ -4,29 +4,30 @@ import com.graphics.primitives.Cube;
 import com.graphics.primitives.Sphere;
 import com.graphics.tools.Camera;
 import com.graphics.tools.LightSource;
+import com.graphics.tools.Paint;
 
 public class Workspace {
 
-    private final Canvas canvas;
+    private final MCanvas canvas;
     private final Cube cube;
     private final Object sphere;
     private final Camera camera;
+    private final Paint.DrawingParams drawingParams;
     private final LightSource lightSource;
 
-    public Workspace(Canvas canvas) {
-        this.canvas = canvas;
+    public Workspace() {
         camera = new Camera(0, 0, 0);
         lightSource = new LightSource(0, 0, -40f);
         cube = new Cube();
         sphere = new Sphere();
 
-
-        canvas.setCamera(camera);
-        canvas.setLightSource(lightSource);
-
+        drawingParams = new Paint.DrawingParams();
+        drawingParams.camera = camera;
+        drawingParams.lightSource = lightSource;
+        this.canvas = new MCanvas(drawingParams);
     }
 
-    public Canvas getCanvas() {
+    public MCanvas getCanvas() {
         return canvas;
     }
 

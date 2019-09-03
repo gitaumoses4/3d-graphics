@@ -8,11 +8,15 @@ import java.util.Arrays;
 
 public class Mesh implements Paint {
     private ArrayList<Triangle> triangles;
-    private Matrix transformation = Matrix.transformation();
+    private Matrix transformation = Matrix.identity(4);
     private float translateX, translateY, translateZ;
 
     public Mesh(ArrayList<Triangle> triangles) {
         this.triangles = new ArrayList<>(triangles);
+    }
+
+    private void sort(){
+        this.triangles.sort(Triangle::compareTo);
     }
 
     public Mesh(Triangle... triangles) {

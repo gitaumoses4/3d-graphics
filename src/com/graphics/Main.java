@@ -1,29 +1,24 @@
 package com.graphics;
 
-import com.graphics.ui.Canvas;
+import com.graphics.ui.MCanvas;
 import com.graphics.ui.Workspace;
 
 import javax.swing.*;
 
 public class Main extends JFrame {
 
-    private final Canvas canvas;
     private final Workspace workspace;
 
     private Main() {
-        canvas = new Canvas();
-        workspace = new Workspace(canvas);
+        workspace = new Workspace();
 
+        MCanvas canvas = workspace.getCanvas();
         canvas.setBounds(0, 0, getWidth(), getHeight());
         add(canvas);
     }
 
     public void draw() {
         workspace.draw();
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
     }
 
     public static void main(String[] args) {
