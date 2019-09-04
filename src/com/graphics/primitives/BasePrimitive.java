@@ -1,7 +1,7 @@
 package com.graphics.primitives;
 
 import com.graphics.events.MouseData;
-import com.graphics.ui.Object;
+import com.graphics.engine.Object;
 import com.graphics.utils.Axis;
 import com.graphics.utils.TransformationMatrices;
 

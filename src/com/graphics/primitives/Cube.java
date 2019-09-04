@@ -1,14 +1,7 @@
 package com.graphics.primitives;
 
-import com.graphics.events.MouseData;
-import com.graphics.tools.Mesh;
 import com.graphics.tools.Triangle;
-import com.graphics.ui.Object;
-import com.graphics.utils.Axis;
-import com.graphics.utils.Tools;
-import com.graphics.utils.TransformationMatrices;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 

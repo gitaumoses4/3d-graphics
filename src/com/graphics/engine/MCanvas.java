@@ -1,4 +1,4 @@
-package com.graphics.ui;
+package com.graphics.engine;
 
 import java.awt.*;
 import java.util.ArrayList;

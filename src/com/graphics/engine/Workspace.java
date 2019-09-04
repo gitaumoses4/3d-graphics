@@ -1,4 +1,4 @@
-package com.graphics.ui;
+package com.graphics.engine;
 
 import com.graphics.primitives.Cube;
 import com.graphics.primitives.Sphere;

@@ -1,7 +1,7 @@
 package com.graphics;
 
-import com.graphics.ui.MCanvas;
-import com.graphics.ui.Workspace;
+import com.graphics.engine.MCanvas;
+import com.graphics.engine.Workspace;
 
 import javax.swing.*;
 

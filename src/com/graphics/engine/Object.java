@@ -1,13 +1,11 @@
-package com.graphics.ui;
+package com.graphics.engine;
 
 import com.graphics.events.MouseData;
 import com.graphics.events.MouseInfoListener;
 import com.graphics.tools.*;
 import com.graphics.tools.Paint;
 
-import java.awt.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
