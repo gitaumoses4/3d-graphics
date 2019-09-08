@@ -1,33 +1,25 @@
 package com.graphics;
 
-import com.graphics.engine.MCanvas;
+import com.graphics.engine.GameEngine;
 import com.graphics.engine.Workspace;
 
-import javax.swing.*;
 
-public class Main extends JFrame {
+public class Main {
 
+    private final GameEngine gameEngine;
     private final Workspace workspace;
 
-    private Main() {
+    private Main() throws Exception {
         workspace = new Workspace();
-
-        MCanvas canvas = workspace.getCanvas();
-        canvas.setBounds(0, 0, getWidth(), getHeight());
-        add(canvas);
+        gameEngine = new GameEngine("3D Game Engine", 1280, 720, true, workspace.getDummyGame());
     }
 
     public void draw() {
         workspace.draw();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Main main = new Main();
-        main.setSize(1000, 800);
-        main.setLocationRelativeTo(null);
-        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        main.setVisible(true);
-        main.setTitle("3D Graphics");
-        main.draw();
+        main.gameEngine.run();
     }
 }

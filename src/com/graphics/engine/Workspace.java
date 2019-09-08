@@ -8,7 +8,7 @@ import com.graphics.tools.Paint;
 
 public class Workspace {
 
-    private final MCanvas canvas;
+    private final DummyGame dummyGame;
     private final Cube cube;
     private final Object sphere;
     private final Camera camera;
@@ -24,15 +24,15 @@ public class Workspace {
         drawingParams = new Paint.DrawingParams();
         drawingParams.camera = camera;
         drawingParams.lightSource = lightSource;
-        this.canvas = new MCanvas(drawingParams);
+        this.dummyGame = new DummyGame(drawingParams);
     }
 
-    public MCanvas getCanvas() {
-        return canvas;
+    public DummyGame getDummyGame() {
+        return dummyGame;
     }
 
     public void draw() {
-//        canvas.addObject(cube);
-        canvas.addObject(sphere);
+//        dummyGame.addObject(cube);
+        dummyGame.addObject(sphere);
     }
 }

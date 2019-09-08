@@ -2,12 +2,9 @@ package com.graphics.engine;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.system.MemoryStack;
 
 import java.awt.*;
-import java.nio.IntBuffer;
 
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL11.*;
@@ -38,7 +35,6 @@ public class Window {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
-        glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -97,7 +93,7 @@ public class Window {
         return glfwGetKey(windowHandle, keyCode) == GLFW_PRESS;
     }
 
-    public boolean windowShouldClose(){
+    public boolean windowShouldClose() {
         return glfwWindowShouldClose(windowHandle);
     }
 
@@ -113,7 +109,7 @@ public class Window {
         return height;
     }
 
-    public boolean isResized(){
+    public boolean isResized() {
         return resized;
     }
 
@@ -129,7 +125,7 @@ public class Window {
         this.vSync = vSync;
     }
 
-    public void update(){
+    public void update() {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
     }
