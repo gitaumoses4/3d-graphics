@@ -54,6 +54,8 @@ public class GameEngine implements Runnable {
                 sync();
             }
         }
+
+        gameLogic.finish();
     }
 
     protected void input() {

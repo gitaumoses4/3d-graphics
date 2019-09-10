@@ -128,5 +128,6 @@ public class Window {
     public void update() {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
+        glClear(GL_COLOR_BUFFER_BIT);
     }
 }

@@ -1,7 +1,11 @@
 package com.graphics.utils;
 
+import org.lwjgl.BufferUtils;
+
 import java.io.File;
 import java.io.InputStream;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -17,5 +21,20 @@ public class Utils {
             result = scanner.useDelimiter("\\A").next();
         }
         return result;
+    }
+
+    public static FloatBuffer toBuffer(float[] data) {
+        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(data.length);
+        floatBuffer.put(data);
+        floatBuffer.flip();
+
+        return floatBuffer;
+    }
+
+    public static IntBuffer toBuffer(int[] data) {
+        IntBuffer intBuffer = BufferUtils.createIntBuffer(data.length);
+        intBuffer.put(data);
+        intBuffer.flip();
+        return intBuffer;
     }
 }
