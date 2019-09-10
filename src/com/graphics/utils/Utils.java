@@ -10,7 +10,7 @@ public class Utils {
 
     public static String loadResource(String fileName) throws Exception {
         // add the path separator to the file name
-        fileName = fileName.startsWith(File.pathSeparator) ? fileName : File.pathSeparator + fileName;
+        fileName = fileName.startsWith(File.separator) ? fileName : (File.separator + fileName);
         String result;
         try (InputStream in = Class.forName(Utils.class.getName()).getResourceAsStream(RESOURCES_DIRECTORY + fileName);
              Scanner scanner = new Scanner(in, StandardCharsets.UTF_8)) {

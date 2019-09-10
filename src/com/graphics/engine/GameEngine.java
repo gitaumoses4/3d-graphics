@@ -9,7 +9,7 @@ public class GameEngine implements Runnable {
     private final Timer timer;
     private final GameLogic gameLogic;
 
-    public GameEngine(String windowTitle, int width, int height, boolean vSync, GameLogic gameLogic) throws Exception {
+    public GameEngine(String windowTitle, int width, int height, boolean vSync, GameLogic gameLogic) {
         window = new Window(windowTitle, width, height, vSync);
         this.gameLogic = gameLogic;
         this.timer = new Timer();
