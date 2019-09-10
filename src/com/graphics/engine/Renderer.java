@@ -1,13 +1,11 @@
 package com.graphics.engine;
 
-import com.graphics.utils.Utils;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import java.awt.*;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
 
 public abstract class Renderer implements GameLogic {
 
@@ -16,7 +14,6 @@ public abstract class Renderer implements GameLogic {
     private final int[] indices;
     private RawModel rawModel;
     private Loader loader;
-    private int programId;
 
     public Renderer(float[] positions, int[] indices) {
         this.positions = positions;
@@ -27,15 +24,6 @@ public abstract class Renderer implements GameLogic {
     public void init() throws Exception {
         loader = new Loader();
         rawModel = loader.loadToVAO(positions, indices);
-        programId = glCreateProgram();
-
-        int vertexShaderId = createShader(Utils.loadResource("vertex.glsl"), GL_VERTEX_SHADER);
-        int fragmentShaderId = createShader(Utils.loadResource("fragment.glsl"), GL_FRAGMENT_SHADER);
-
-        glLinkProgram(programId);
-        glDetachShader(programId, vertexShaderId);
-        glDetachShader(programId, fragmentShaderId);
-        glValidateProgram(programId);
     }
 
     public void setRawModel(RawModel rawModel) {
@@ -46,19 +34,9 @@ public abstract class Renderer implements GameLogic {
         return rawModel;
     }
 
-    private int createShader(String shaderCode, int shaderType) {
-        int shaderId = glCreateShader(shaderType);
-        glShaderSource(shaderId, shaderCode);
-        glCompileShader(shaderId);
-
-        glAttachShader(programId, shaderId);
-        return shaderId;
-    }
-
     @Override
     public void render(Window window) {
         window.setClearColor(Color.black);
-        glUseProgram(programId);
         GL30.glBindVertexArray(rawModel.getVaoID());
         GL20.glEnableVertexAttribArray(0);
 
