@@ -1,33 +1,32 @@
 package com.graphics.engine;
 
 import com.graphics.utils.Utils;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import java.awt.*;
-import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.GL_VERTEX_ARRAY_BINDING;
 
 public abstract class Renderer implements GameLogic {
 
 
     private final float[] positions;
+    private final int[] indices;
     private RawModel rawModel;
     private Loader loader;
     private int programId;
 
-    public Renderer(float[] positions) {
+    public Renderer(float[] positions, int[] indices) {
         this.positions = positions;
+        this.indices = indices;
     }
 
     @Override
     public void init() throws Exception {
         loader = new Loader();
-        rawModel = loader.loadToVAO(positions);
+        rawModel = loader.loadToVAO(positions, indices);
         programId = glCreateProgram();
 
         int vertexShaderId = createShader(Utils.loadResource("vertex.glsl"), GL_VERTEX_SHADER);
@@ -58,11 +57,13 @@ public abstract class Renderer implements GameLogic {
 
     @Override
     public void render(Window window) {
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        window.setClearColor(Color.black);
         glUseProgram(programId);
         GL30.glBindVertexArray(rawModel.getVaoID());
         GL20.glEnableVertexAttribArray(0);
-        GL11.glDrawArrays(GL_TRIANGLES, 0, rawModel.getVertexCount());
+
+        glDrawElements(GL_TRIANGLES, rawModel.getVertexCount(), GL_UNSIGNED_INT, 0);
+
         GL20.glDisableVertexAttribArray(0);
         GL30.glBindVertexArray(0);
     }
