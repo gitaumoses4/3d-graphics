@@ -1,11 +1,17 @@
 package com.graphics.engine;
 
+import com.graphics.maths.Matrix4f;
+import com.graphics.maths.Vector3f;
 import com.graphics.utils.Utils;
+import org.lwjgl.opengl.GL20;
+
+import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL20.*;
 
 public abstract class ShaderProgram {
 
+    private FloatBuffer matrixBuffer = FloatBuffer.allocate(16);
     private int programID, vertexShaderID, fragmentShaderID;
 
     public ShaderProgram(String vertexFile, String fragmentFile) {
@@ -17,9 +23,11 @@ public abstract class ShaderProgram {
             glAttachShader(programID, vertexShaderID);
             glAttachShader(programID, fragmentShaderID);
 
+            bindAttributes();
+
             glLinkProgram(programID);
             glValidateProgram(programID);
-            bindAttributes();
+            getAllUniformLocations();
         } catch (Exception ignore) {
 
         }
@@ -59,5 +67,29 @@ public abstract class ShaderProgram {
             System.exit(-1);
         }
         return shaderID;
+    }
+
+    protected int getUniformLocation(String uniformName) {
+        return GL20.glGetUniformLocation(programID, uniformName);
+    }
+
+    protected abstract void getAllUniformLocations();
+
+    protected void load(int location, float value) {
+        GL20.glUniform1f(location, value);
+    }
+
+    protected void load(int location, Vector3f vector) {
+        GL20.glUniform3f(location, vector.x, vector.y, vector.z);
+    }
+
+    protected void load(int location, boolean value) {
+        GL20.glUniform1f(location, value ? 1f : 0f);
+    }
+
+    protected void load(int location, Matrix4f value) {
+        value.toBuffer(matrixBuffer);
+        matrixBuffer.flip();
+        GL20.glUniformMatrix4fv(location, false, matrixBuffer);
     }
 }
