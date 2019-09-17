@@ -1,8 +1,9 @@
-package com.graphics.engine;
+package com.graphics.engine.shaders;
 
 import com.graphics.maths.Matrix4f;
 import com.graphics.maths.Vector3f;
 import com.graphics.utils.Utils;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
 import java.nio.FloatBuffer;
@@ -11,7 +12,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 public abstract class ShaderProgram {
 
-    private FloatBuffer matrixBuffer = FloatBuffer.allocate(16);
+    private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     private int programID, vertexShaderID, fragmentShaderID;
 
     public ShaderProgram(String vertexFile, String fragmentFile) {
@@ -89,7 +90,6 @@ public abstract class ShaderProgram {
 
     protected void load(int location, Matrix4f value) {
         value.toBuffer(matrixBuffer);
-        matrixBuffer.flip();
         GL20.glUniformMatrix4fv(location, false, matrixBuffer);
     }
 }

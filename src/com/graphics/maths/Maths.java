@@ -6,9 +6,9 @@ public class Maths {
         Matrix4f matrix4f = new Matrix4f();
         matrix4f.setIdentity();
         matrix4f = matrix4f.multiply(Matrix4f.translate(translation.x, translation.y, translation.z));
-        matrix4f = matrix4f.multiply(Matrix4f.rotate((float) Math.toRadians(rx), 1, 0, 0));
-        matrix4f = matrix4f.multiply(Matrix4f.rotate((float) Math.toRadians(ry), 0, 1, 0));
-        matrix4f = matrix4f.multiply(Matrix4f.rotate((float) Math.toRadians(rz), 0, 0, 1));
+        matrix4f = matrix4f.multiply(Matrix4f.rotate(rx, 1, 0, 0));
+        matrix4f = matrix4f.multiply(Matrix4f.rotate(ry, 0, 1, 0));
+        matrix4f = matrix4f.multiply(Matrix4f.rotate(rz, 0, 0, 1));
         matrix4f = matrix4f.multiply(Matrix4f.scale(scale, scale, scale));
 
         return matrix4f;

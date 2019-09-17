@@ -235,6 +235,7 @@ public class Matrix4f {
      * @param buffer The buffer to store the matrix data
      */
     public void toBuffer(FloatBuffer buffer) {
+        buffer.clear();
         buffer.put(m00).put(m10).put(m20).put(m30);
         buffer.put(m01).put(m11).put(m21).put(m31);
         buffer.put(m02).put(m12).put(m22).put(m32);
