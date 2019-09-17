@@ -50,7 +50,7 @@ public abstract class ShaderProgram {
 
     private static int loadShader(String file, int type) throws Exception {
         int shaderID = glCreateShader(type);
-        glShaderSource(shaderID, Utils.loadResource(file));
+        glShaderSource(shaderID, Utils.loadShader(file));
         glCompileShader(shaderID);
 
         if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE) {

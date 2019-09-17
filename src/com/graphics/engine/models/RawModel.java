@@ -1,4 +1,4 @@
-package com.graphics.engine;
+package com.graphics.engine.models;
 
 public class RawModel {
 

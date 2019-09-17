@@ -10,7 +10,13 @@ public class Rectangle extends Renderer {
     public Rectangle() {
         super(
                 new float[]{-0.5f, 0.5f, 0, -0.5f, -0.5f, 0, 0.5f, -0.5f, 0, 0.5f, 0.5f, 0},
-                new int[]{0, 1, 3, 3, 1, 2}
+                new int[]{0, 1, 3, 3, 1, 2},
+                new float[]{
+                        0, 0,
+                        0, 1,
+                        1, 1,
+                        1, 0
+                }
         );
     }
 

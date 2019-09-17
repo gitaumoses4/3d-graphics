@@ -1,5 +1,6 @@
 package com.graphics.engine;
 
+import com.graphics.engine.models.RawModel;
 import com.graphics.utils.Utils;
 import org.lwjgl.opengl.GL30;
 
@@ -16,11 +17,13 @@ public class Loader {
 
     private List<Integer> vaos = new ArrayList<>();
     private List<Integer> vbos = new ArrayList<>();
+    private List<Integer> textures = new ArrayList<>();
 
-    public RawModel loadToVAO(float[] positions, int [] indices) {
+    public RawModel loadToVAO(float[] positions, int[] indices, float[] textureCoords) {
         int vaoID = createVAO();
         bindIndicesBuffer(indices);
-        storeDataInAttributeList(0, positions);
+        storeDataInAttributeList(0, 3, positions);
+        storeDataInAttributeList(1, 2, textureCoords);
         unbindVAO();
         return new RawModel(vaoID, indices.length);
     }
@@ -32,14 +35,27 @@ public class Loader {
         return vaoID;
     }
 
-    private void storeDataInAttributeList(int attributeIndex, float[] data) {
+    private void storeDataInAttributeList(int attributeIndex, int coordinateSize, float[] data) {
         int vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         FloatBuffer buffer = Utils.toBuffer(data);
         glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-        glVertexAttribPointer(attributeIndex, 3, GL_FLOAT, false, 0, 0);
+        glVertexAttribPointer(attributeIndex, coordinateSize, GL_FLOAT, false, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         vbos.add(vboID);
+    }
+
+
+    public int loadTexture(String fileName) {
+        int textureID = 0;
+        try {
+            Texture texture = new Texture(fileName);
+            textureID = texture.getId();
+            textures.add(textureID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return textureID;
     }
 
     private void bindIndicesBuffer(int[] indices) {
@@ -54,6 +70,7 @@ public class Loader {
     public void cleanUp() {
         vaos.forEach(GL30::glDeleteVertexArrays);
         vbos.forEach(GL30::glDeleteBuffers);
+        textures.forEach(GL30::glDeleteTextures);
     }
 
     private void unbindVAO() {
