@@ -28,6 +28,13 @@ public class Loader {
         return new RawModel(vaoID, indices.length);
     }
 
+    public RawModel loadToVAO(float[] positions) {
+        int vaoID = createVAO();
+        storeDataInAttributeList(0, 3, positions);
+        unbindVAO();
+        return new RawModel(vaoID, positions.length / 3);
+    }
+
     private int createVAO() {
         int vaoID = glGenVertexArrays();
         vaos.add(vaoID);

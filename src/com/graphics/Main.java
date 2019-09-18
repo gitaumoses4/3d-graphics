@@ -16,12 +16,13 @@ public class Main {
 
     private Main() {
         Renderer renderer = new Renderer() {
-            Entity entity;
 
             @Override
             public void init(Window window) throws Exception {
-                entity = new Cube().createEntity(new Vector3f(0, 0, -2f), 0, 0, 0, 1f);
-                addEntity(entity, new StaticShader(window));
+                StaticShader staticShader = new StaticShader(window);
+                Cube cube = new Cube();
+                addEntity(cube.createEntity(new Vector3f(0, 0, -4f), 0, 0, 0, 1f), staticShader);
+                addEntity(cube.createEntity(new Vector3f(1f, 0.4f, -2f), 0, 0, 0, 1f), staticShader);
             }
 
             @Override
@@ -31,15 +32,18 @@ public class Main {
 
             @Override
             public void update(float interval) {
-                if (entity != null) {
+                if (hasEntities()) {
 //                    entity.move(0.002f, 0, 0);
-                    entity.rotate(0.4f, 1.7f, 1.3f);
+                    getEntity(0).rotate(0.4f, 1.7f, 1.3f);
+                    getEntity(1).rotate(0.2f, 3.7f, 1f);
                 }
             }
 
             @Override
             public void finish() {
-
+                if (hasEntities()) {
+                    allEntities().forEach(entity -> entity.getTexturedModel().getLoader().cleanUp());
+                }
             }
         };
         gameEngine = new GameEngine("3D Game Engine", 1280, 720, true, renderer);

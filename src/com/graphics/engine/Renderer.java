@@ -8,6 +8,7 @@ import com.graphics.maths.Maths;
 import com.graphics.maths.Matrix4f;
 import org.lwjgl.opengl.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -15,6 +16,7 @@ import static org.lwjgl.opengl.GL11.*;
 public abstract class Renderer implements GameLogic {
 
     private HashMap<Entity, StaticShader> entities = new HashMap<>();
+    private ArrayList<Entity> entityList = new ArrayList<>();
 
     public Renderer() {
     }
@@ -22,14 +24,29 @@ public abstract class Renderer implements GameLogic {
 
     public void addEntity(Entity entity, StaticShader shaderProgram) {
         this.entities.put(entity, shaderProgram);
+        entityList.add(entity);
     }
 
     public void removeEntity(Entity entity) {
         this.entities.remove(entity);
+        entityList.remove(entity);
     }
 
     public void clear() {
         this.entities.clear();
+        entityList.clear();
+    }
+
+    public Entity getEntity(int index) {
+        return entityList.get(index);
+    }
+
+    public boolean hasEntities() {
+        return !this.entities.isEmpty();
+    }
+
+    public ArrayList<Entity> allEntities() {
+        return entityList;
     }
 
     @Override

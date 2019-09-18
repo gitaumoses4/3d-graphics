@@ -11,12 +11,12 @@ public abstract class Model {
 
     public Model() {
         Loader loader = new Loader();
-        RawModel rawModel = loader.loadToVAO(getPosition(), getIndices(), getTexturedCoordinates());
+        RawModel rawModel = loader.loadToVAO(getPositionCoordinates(), getIndices(), getTexturedCoordinates());
         ModelTexture modelTexture = new ModelTexture(loader.loadTexture("wood.png"));
         texturedModel = new TexturedModel(rawModel, modelTexture, loader);
     }
 
-    public abstract float[] getPosition();
+    public abstract float[] getPositionCoordinates();
 
     public abstract int[] getIndices();
 

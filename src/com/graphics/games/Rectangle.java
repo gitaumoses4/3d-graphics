@@ -8,7 +8,7 @@ public class Rectangle extends Model {
     }
 
     @Override
-    public float[] getPosition() {
+    public float[] getPositionCoordinates() {
         return new float[]{
                 -0.5f, 0.5f, 0,
                 -0.5f, -0.5f, 0,

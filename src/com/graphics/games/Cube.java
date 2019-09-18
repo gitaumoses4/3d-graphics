@@ -5,7 +5,7 @@ import com.graphics.engine.models.Model;
 public class Cube extends Model {
 
     @Override
-    public float[] getPosition() {
+    public float[] getPositionCoordinates() {
         return new float[]{
                 -0.5f, +0.5f, +0.5f, -0.5f, -0.5f, +0.5f, +0.5f, -0.5f, +0.5f, +0.5f, +0.5f, +0.5f,
                 -0.5f, +0.5f, -0.5f, -0.5f, -0.5f, -0.5f, +0.5f, -0.5f, -0.5f, +0.5f, +0.5f, -0.5f,
