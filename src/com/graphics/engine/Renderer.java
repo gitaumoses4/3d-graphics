@@ -1,5 +1,6 @@
 package com.graphics.engine;
 
+import com.graphics.engine.camera.Camera;
 import com.graphics.engine.entities.Entity;
 import com.graphics.engine.models.RawModel;
 import com.graphics.engine.models.TexturedModel;
@@ -18,6 +19,9 @@ public abstract class Renderer implements GameLogic {
     private HashMap<Entity, StaticShader> entities = new HashMap<>();
     private ArrayList<Entity> entityList = new ArrayList<>();
 
+    private Camera camera = new Camera();
+    private Window window;
+
     public Renderer() {
     }
 
@@ -30,6 +34,14 @@ public abstract class Renderer implements GameLogic {
     public void removeEntity(Entity entity) {
         this.entities.remove(entity);
         entityList.remove(entity);
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 
     public void clear() {
@@ -51,6 +63,7 @@ public abstract class Renderer implements GameLogic {
 
     @Override
     public void render(Window window) {
+        this.window = window;
         glEnable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         entities.forEach((this::render));
@@ -69,6 +82,8 @@ public abstract class Renderer implements GameLogic {
 
             shaderProgram.loadTransformationMatrix(transformationMatrix);
             shaderProgram.loadProjectionMatrix();
+            shaderProgram.loadViewMatrix(camera);
+            camera.move(window);
 
             GL13.glActiveTexture(GL13.GL_TEXTURE0);
             GL11.glBindTexture(GL_TEXTURE_2D, texturedModel.getModelTexture().getID());
