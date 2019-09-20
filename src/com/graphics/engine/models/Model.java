@@ -1,26 +1,33 @@
 package com.graphics.engine.models;
 
 import com.graphics.engine.Loader;
+import com.graphics.engine.OBJLoader;
 import com.graphics.engine.entities.Entity;
 import com.graphics.engine.textures.ModelTexture;
 import com.graphics.maths.Vector3f;
 
-public abstract class Model {
+public class Model {
 
     private TexturedModel texturedModel;
+    private final Loader loader = new Loader();
 
-    public Model() {
-        Loader loader = new Loader();
-        RawModel rawModel = loader.loadToVAO(getPositionCoordinates(), getIndices(), getTexturedCoordinates());
-        ModelTexture modelTexture = new ModelTexture(loader.loadTexture("wood.png"));
-        texturedModel = new TexturedModel(rawModel, modelTexture, loader);
+    public Model(String textureFile, String modelFile) {
+        this.initialize(OBJLoader.loadObjModel(modelFile, loader), textureFile);
     }
 
-    public abstract float[] getPositionCoordinates();
+    public Model(String textureFile, float[] positions, int[] indices, float[] textures) {
+        RawModel rawModel = loader.loadToVAO(positions, indices, textures);
+        this.initialize(rawModel, textureFile);
+    }
 
-    public abstract int[] getIndices();
-
-    public abstract float[] getTexturedCoordinates();
+    private void initialize(RawModel rawModel, String texture) throws NullPointerException {
+        if (rawModel == null) {
+            throw new NullPointerException("Unable to initialize model");
+        } else {
+            ModelTexture modelTexture = new ModelTexture(loader.loadTexture(texture));
+            texturedModel = new TexturedModel(rawModel, modelTexture);
+        }
+    }
 
     public Entity createEntity(Vector3f position, float rotX, float rotY, float rotZ, float scale) {
         return new Entity(texturedModel, position, rotX, rotY, rotZ, scale);

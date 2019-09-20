@@ -25,14 +25,14 @@ public class Loader {
         storeDataInAttributeList(0, 3, positions);
         storeDataInAttributeList(1, 2, textureCoords);
         unbindVAO();
-        return new RawModel(vaoID, indices.length);
+        return new RawModel(vaoID, indices.length, this);
     }
 
     public RawModel loadToVAO(float[] positions) {
         int vaoID = createVAO();
         storeDataInAttributeList(0, 3, positions);
         unbindVAO();
-        return new RawModel(vaoID, positions.length / 3);
+        return new RawModel(vaoID, positions.length / 3, this);
     }
 
     private int createVAO() {

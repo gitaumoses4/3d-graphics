@@ -1,8 +1,11 @@
 package com.graphics.utils;
 
+import com.graphics.maths.Vector2f;
+import com.graphics.maths.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
@@ -12,11 +15,21 @@ public class Utils {
     public static final String RESOURCES_DIRECTORY = "../../../resources";
     public static final String SHADERS_DIRECTORY = RESOURCES_DIRECTORY + "/shaders";
     public static final String TEXTURES_DIRECTORY = RESOURCES_DIRECTORY + "/textures";
+    public static final String OBJECTS_DIRECTORY = RESOURCES_DIRECTORY + "/objects";
 
 
     public static String createFilePath(String directory, String fileName) {
         fileName = fileName.startsWith(File.separator) ? fileName : (File.separator + fileName);
         return directory + fileName;
+    }
+
+    public static File createResourceFile(String path) throws ClassNotFoundException {
+        try {
+            return new File(Class.forName(Utils.class.getName()).getResource(path).toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static InputStream createInputStream(String path) throws ClassNotFoundException {
@@ -46,6 +59,10 @@ public class Utils {
         return createInputStream(createFilePath(TEXTURES_DIRECTORY, fileName));
     }
 
+    public static File loadObject(String fileName) throws ClassNotFoundException {
+        return createResourceFile(createFilePath(OBJECTS_DIRECTORY, fileName));
+    }
+
     public static FloatBuffer toBuffer(float[] data) {
         FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(data.length);
         floatBuffer.put(data);
@@ -59,5 +76,16 @@ public class Utils {
         intBuffer.put(data);
         intBuffer.flip();
         return intBuffer;
+    }
+
+    public static void addToArray(Vector3f vector, float[] array, int index) {
+        array[index] = vector.x;
+        array[index + 1] = vector.y;
+        array[index + 2] = vector.z;
+    }
+
+    public static void addToArray(Vector2f vector, float[] array, int index) {
+        array[index] = vector.x;
+        array[index + 1] = vector.y;
     }
 }

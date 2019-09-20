@@ -2,11 +2,9 @@ package com.graphics;
 
 import com.graphics.engine.GameEngine;
 import com.graphics.engine.Renderer;
+import com.graphics.engine.models.Model;
 import com.graphics.engine.shaders.StaticShader;
 import com.graphics.engine.Window;
-import com.graphics.engine.entities.Entity;
-import com.graphics.games.Cube;
-import com.graphics.games.Rectangle;
 import com.graphics.maths.Vector3f;
 
 
@@ -20,9 +18,8 @@ public class Main {
             @Override
             public void init(Window window) throws Exception {
                 StaticShader staticShader = new StaticShader(window);
-                Cube cube = new Cube();
-                addEntity(cube.createEntity(new Vector3f(0, 0, -4f), 0, 0, 0, 1f), staticShader);
-                addEntity(cube.createEntity(new Vector3f(1f, 0.4f, -2f), 0, 0, 0, 1f), staticShader);
+                Model model = new Model("stallTexture.png", "stall.obj");
+                addEntity(model.createEntity(new Vector3f(0, 0, -4f), 0, 0, 0, 1f), staticShader);
             }
 
             @Override
@@ -34,8 +31,7 @@ public class Main {
             public void update(float interval) {
                 if (hasEntities()) {
 //                    entity.move(0.002f, 0, 0);
-                    getEntity(0).rotate(0.4f, 1.7f, 1.3f);
-                    getEntity(1).rotate(0.2f, 3.7f, 1f);
+                    getEntity(0).rotate(0f, 1.7f, 0f);
                 }
             }
 

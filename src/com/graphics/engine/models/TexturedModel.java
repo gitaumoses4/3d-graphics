@@ -4,18 +4,16 @@ import com.graphics.engine.Loader;
 import com.graphics.engine.textures.ModelTexture;
 
 public class TexturedModel {
-    private final Loader loader;
     private RawModel rawModel;
     private ModelTexture modelTexture;
 
-    public TexturedModel(RawModel rawModel, ModelTexture modelTexture, Loader loader) {
+    public TexturedModel(RawModel rawModel, ModelTexture modelTexture) {
         this.rawModel = rawModel;
         this.modelTexture = modelTexture;
-        this.loader = loader;
     }
 
     public Loader getLoader() {
-        return loader;
+        return rawModel.getLoader();
     }
 
     public RawModel getRawModel() {
