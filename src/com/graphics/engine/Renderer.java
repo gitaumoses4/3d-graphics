@@ -2,11 +2,13 @@ package com.graphics.engine;
 
 import com.graphics.engine.camera.Camera;
 import com.graphics.engine.entities.Entity;
+import com.graphics.engine.lighting.Light;
 import com.graphics.engine.models.RawModel;
 import com.graphics.engine.models.TexturedModel;
 import com.graphics.engine.shaders.StaticShader;
 import com.graphics.maths.Maths;
 import com.graphics.maths.Matrix4f;
+import com.graphics.maths.Vector3f;
 import org.lwjgl.opengl.*;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public abstract class Renderer implements GameLogic {
     private ArrayList<Entity> entityList = new ArrayList<>();
 
     private Camera camera = new Camera();
+    private Light light = new Light(new Vector3f(0, 0, 0), new Vector3f(1, 0, 1));
     private Window window;
 
     public Renderer() {
@@ -84,6 +87,7 @@ public abstract class Renderer implements GameLogic {
             shaderProgram.loadTransformationMatrix(transformationMatrix);
             shaderProgram.loadProjectionMatrix();
             shaderProgram.loadViewMatrix(camera);
+            shaderProgram.loadLight(light);
             camera.move(window);
 
             GL13.glActiveTexture(GL13.GL_TEXTURE0);

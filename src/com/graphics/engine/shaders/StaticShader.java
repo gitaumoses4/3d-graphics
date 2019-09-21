@@ -36,8 +36,8 @@ public class StaticShader extends ShaderProgram {
         location_transformationMatrix = getUniformLocation("transformationMatrix");
         location_projectionMatrix = getUniformLocation("projectionMatrix");
         location_viewMatrix = getUniformLocation("viewMatrix");
-        location_lightColor = getUniformLocation("lightColor");
         location_lightPosition = getUniformLocation("lightPosition");
+        location_lightColor = getUniformLocation("lightColor");
     }
 
     public void loadTransformationMatrix(Matrix4f matrix4f) {

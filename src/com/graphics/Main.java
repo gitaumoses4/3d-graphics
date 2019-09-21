@@ -14,7 +14,6 @@ import java.awt.*;
 public class Main {
 
     private final GameEngine gameEngine;
-    private Light light = new Light(new Vector3f(0, 0, -20f), new Vector3f(1, 0, 1));
 
     private Main() {
         Renderer renderer = new Renderer() {
@@ -22,7 +21,6 @@ public class Main {
 
             @Override
             public void init(Window window) throws Exception {
-                window.setClearColor(Color.red);
                 staticShader = new StaticShader(window);
                 Model model = new Model("dragon");
                 addEntity(model.createEntity(new Vector3f(0, -4f, -25f), 0, 0, 0, 1f), staticShader);
@@ -39,7 +37,6 @@ public class Main {
 //                    entity.move(0.002f, 0, 0);
                     getEntity(0).rotate(0f, 1.7f, 0f);
                 }
-                staticShader.loadLight(light);
             }
 
             @Override
