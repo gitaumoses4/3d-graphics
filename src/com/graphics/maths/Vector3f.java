@@ -164,4 +164,8 @@ public class Vector3f {
         buffer.flip();
     }
 
+    @Override
+    public String toString() {
+        return String.format("[%.2f, %.2f, %.2f]", x, y, z);
+    }
 }

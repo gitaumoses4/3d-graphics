@@ -48,7 +48,7 @@ public class OBJLoader {
                 line = reader.readLine();
             }
             int[] indicesArray = indices.stream().mapToInt(i -> i).toArray();
-            return loader.loadToVAO(verticesArray, indicesArray, texturesArray);
+            return loader.loadToVAO(verticesArray, texturesArray, normalsArray, indicesArray);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,7 +58,7 @@ public class OBJLoader {
     private static void readVertex(String vertexData, float[] verticesArray, float[] texturesArray, float[] normalsArray) {
         String[] tokens = vertexData.split("/");
         int index = Integer.parseInt(tokens[0]) - 1;
-        int textureIndex = Integer.parseInt(tokens[1]) - 1;
+        int textureIndex = tokens[1].isEmpty() ? 0 : Integer.parseInt(tokens[1]) - 1;
         int normalIndex = Integer.parseInt(tokens[2]) - 1;
         indices.add(index);
 

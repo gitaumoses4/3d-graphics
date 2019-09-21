@@ -16,6 +16,7 @@ public class Texture {
 
     public Texture(String fileName) {
         try {
+            System.out.println(fileName);
             BufferedImage bufferedImage = ImageIO.read(Utils.loadTexture(fileName));
             width = bufferedImage.getWidth();
             height = bufferedImage.getHeight();

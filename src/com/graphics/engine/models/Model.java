@@ -11,12 +11,17 @@ public class Model {
     private TexturedModel texturedModel;
     private final Loader loader = new Loader();
 
+
+    public Model(String modelFile) {
+        this.initialize(OBJLoader.loadObjModel(modelFile, loader), null);
+    }
+
     public Model(String textureFile, String modelFile) {
         this.initialize(OBJLoader.loadObjModel(modelFile, loader), textureFile);
     }
 
-    public Model(String textureFile, float[] positions, int[] indices, float[] textures) {
-        RawModel rawModel = loader.loadToVAO(positions, indices, textures);
+    public Model(String textureFile, float[] positions, float[] textures, float[] normals, int[] indices) {
+        RawModel rawModel = loader.loadToVAO(positions, textures, normals, indices);
         this.initialize(rawModel, textureFile);
     }
 

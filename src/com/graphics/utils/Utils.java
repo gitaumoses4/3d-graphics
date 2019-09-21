@@ -39,7 +39,7 @@ public class Utils {
     public static String loadShader(String fileName) throws Exception {
         // add the path separator to the file name
         String result;
-        try (InputStream in = createInputStream(createFilePath(SHADERS_DIRECTORY, fileName));
+        try (InputStream in = createInputStream(createFilePath(SHADERS_DIRECTORY, addExtension(fileName, "glsl")));
              Scanner scanner = new Scanner(in, StandardCharsets.UTF_8)) {
             result = scanner.useDelimiter("\\A").next();
         }
@@ -59,8 +59,12 @@ public class Utils {
         return createInputStream(createFilePath(TEXTURES_DIRECTORY, fileName));
     }
 
+    public static String addExtension(String fileName, String extension) {
+        return fileName.endsWith(extension) ? fileName : fileName + "." + extension;
+    }
+
     public static File loadObject(String fileName) throws ClassNotFoundException {
-        return createResourceFile(createFilePath(OBJECTS_DIRECTORY, fileName));
+        return createResourceFile(createFilePath(OBJECTS_DIRECTORY, addExtension(fileName, "obj")));
     }
 
     public static FloatBuffer toBuffer(float[] data) {

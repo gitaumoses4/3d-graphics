@@ -2,6 +2,7 @@ package com.graphics.engine.shaders;
 
 import com.graphics.engine.Window;
 import com.graphics.engine.camera.Camera;
+import com.graphics.engine.lighting.Light;
 import com.graphics.maths.Maths;
 import com.graphics.maths.Matrix4f;
 
@@ -15,9 +16,11 @@ public class StaticShader extends ShaderProgram {
     private int location_transformationMatrix;
     private int location_projectionMatrix;
     private int location_viewMatrix;
+    private int location_lightPosition;
+    private int location_lightColor;
 
     public StaticShader(Window window) {
-        super("vertex.glsl", "fragment.glsl");
+        super("vertex", "fragment");
         this.window = window;
     }
 
@@ -25,6 +28,7 @@ public class StaticShader extends ShaderProgram {
     protected void bindAttributes() {
         bindAttribute(0, "position");
         bindAttribute(1, "textureCoords");
+        bindAttribute(2, "normal");
     }
 
     @Override
@@ -32,6 +36,8 @@ public class StaticShader extends ShaderProgram {
         location_transformationMatrix = getUniformLocation("transformationMatrix");
         location_projectionMatrix = getUniformLocation("projectionMatrix");
         location_viewMatrix = getUniformLocation("viewMatrix");
+        location_lightColor = getUniformLocation("lightColor");
+        location_lightPosition = getUniformLocation("lightPosition");
     }
 
     public void loadTransformationMatrix(Matrix4f matrix4f) {
@@ -47,5 +53,10 @@ public class StaticShader extends ShaderProgram {
 
     public void loadViewMatrix(Camera camera) {
         super.load(location_viewMatrix, Maths.createViewMatrix(camera));
+    }
+
+    public void loadLight(Light light) {
+        super.load(location_lightPosition, light.getPosition());
+        super.load(location_lightColor, light.getColor());
     }
 }
