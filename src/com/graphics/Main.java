@@ -24,6 +24,7 @@ public class Main {
                 staticShader = new StaticShader(window);
                 Model model = new Model("dragon");
                 addEntity(model.createEntity(new Vector3f(0, -4f, -25f), 0, 0, 0, 1f), staticShader);
+                window.addMouseListener(getCamera());
             }
 
             @Override

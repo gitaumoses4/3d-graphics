@@ -1,5 +1,9 @@
 package com.graphics.engine;
 
+import com.graphics.engine.events.MouseListener;
+
+import java.util.ArrayList;
+
 public class GameEngine implements Runnable {
 
     public static final int TARGET_FPS = 75;
