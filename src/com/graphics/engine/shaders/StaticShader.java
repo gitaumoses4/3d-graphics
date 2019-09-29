@@ -13,11 +13,13 @@ public class StaticShader extends ShaderProgram {
     private static final float FAR_PLANE = 1000;
     private final Window window;
 
-    private int location_transformationMatrix;
-    private int location_projectionMatrix;
-    private int location_viewMatrix;
-    private int location_lightPosition;
-    private int location_lightColor;
+    public static final String TRANSFORMATION_MATRIX = "transformationMatrix";
+    public static final String PROJECTION_MATRIX = "projectionMatrix";
+    public static final String VIEW_MATRIX = "viewMatrix";
+    public static final String LIGHT_POSITION = "lightPosition";
+    public static final String LIGHT_COLOR = "lightColor";
+    public static final String SHINE_DAMPER = "shineDamper";
+    public static final String REFLECTIVITY = "reflectivity";
 
     public StaticShader(Window window) {
         super("vertex", "fragment");
@@ -32,31 +34,17 @@ public class StaticShader extends ShaderProgram {
     }
 
     @Override
-    protected void getAllUniformLocations() {
-        location_transformationMatrix = getUniformLocation("transformationMatrix");
-        location_projectionMatrix = getUniformLocation("projectionMatrix");
-        location_viewMatrix = getUniformLocation("viewMatrix");
-        location_lightPosition = getUniformLocation("lightPosition");
-        location_lightColor = getUniformLocation("lightColor");
+    protected String[] getAllUniformLocations() {
+        return new String[]{
+                TRANSFORMATION_MATRIX, PROJECTION_MATRIX,
+                VIEW_MATRIX, LIGHT_POSITION,
+                LIGHT_COLOR, SHINE_DAMPER,
+                REFLECTIVITY
+        };
     }
 
-    public void loadTransformationMatrix(Matrix4f matrix4f) {
-        super.load(location_transformationMatrix, matrix4f);
-    }
-
-    public void loadProjectionMatrix() {
+    public Matrix4f getProjectionMatrix() {
         float aspect = ((float) window.getWidth()) / window.getHeight();
-        Matrix4f projectionMatrix = Matrix4f.perspective(FOV, aspect, NEAR_PLANE, FAR_PLANE);
-
-        super.load(location_projectionMatrix, projectionMatrix);
-    }
-
-    public void loadViewMatrix(Camera camera) {
-        super.load(location_viewMatrix, Maths.createViewMatrix(camera));
-    }
-
-    public void loadLight(Light light) {
-        super.load(location_lightPosition, light.getPosition());
-        super.load(location_lightColor, light.getColor());
+        return Matrix4f.perspective(FOV, aspect, NEAR_PLANE, FAR_PLANE);
     }
 }

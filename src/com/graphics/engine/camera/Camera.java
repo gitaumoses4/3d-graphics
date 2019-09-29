@@ -19,7 +19,7 @@ public class Camera implements MouseListener {
     }
 
     public void move(Window window) {
-        float diff = 0.03f;
+        float diff = 1f;
         if (window.isKeyPressed(GLFW_KEY_W)) {
             position.z -= diff;
         } else if (window.isKeyPressed(GLFW_KEY_A)) {

@@ -7,6 +7,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
 import java.nio.FloatBuffer;
+import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -14,6 +15,7 @@ public abstract class ShaderProgram {
 
     private FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     private int programID, vertexShaderID, fragmentShaderID;
+    private HashMap<String, Integer> locations = new HashMap<>();
 
     public ShaderProgram(String vertexFile, String fragmentFile) {
         try {
@@ -28,7 +30,9 @@ public abstract class ShaderProgram {
 
             glLinkProgram(programID);
             glValidateProgram(programID);
-            getAllUniformLocations();
+            for (String location : getAllUniformLocations()) {
+                locations.put(location, getUniformLocation(location));
+            }
         } catch (Exception ignore) {
 
         }
@@ -74,22 +78,23 @@ public abstract class ShaderProgram {
         return GL20.glGetUniformLocation(programID, uniformName);
     }
 
-    protected abstract void getAllUniformLocations();
+    protected abstract String[] getAllUniformLocations();
 
-    protected void load(int location, float value) {
-        GL20.glUniform1f(location, value);
+    public void load(String location, float value) {
+        GL20.glUniform1f(locations.get(location), value);
     }
 
-    protected void load(int location, Vector3f vector) {
-        GL20.glUniform3f(location, vector.x, vector.y, vector.z);
+    public void load(String location, Vector3f vector) {
+        GL20.glUniform3f(locations.get(location), vector.x, vector.y, vector.z);
     }
 
-    protected void load(int location, boolean value) {
-        GL20.glUniform1f(location, value ? 1f : 0f);
+    public void load(String location, boolean value) {
+        GL20.glUniform1f(locations.get(location), value ? 1f : 0f);
     }
 
-    protected void load(int location, Matrix4f value) {
+    public void load(String location, Matrix4f value) {
         value.toBuffer(matrixBuffer);
-        GL20.glUniformMatrix4fv(location, false, matrixBuffer);
+        GL20.glUniformMatrix4fv(locations.get(location), false, matrixBuffer);
     }
+
 }

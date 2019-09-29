@@ -59,6 +59,7 @@ public class Window {
             this.width = width;
             this.height = height;
             this.setResized(true);
+            glViewport(0, 0, width, height);
         });
 
         glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
