@@ -27,7 +27,7 @@ public class Texture {
 
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    int pixel = raw_pixels[i * width + j];
+                    int pixel = raw_pixels[(i * height) + j];
                     pixels.put((byte) ((pixel >> 16) & 0xFF));
                     pixels.put((byte) ((pixel >> 8) & 0xFF));
                     pixels.put((byte) ((pixel) & 0xFF));

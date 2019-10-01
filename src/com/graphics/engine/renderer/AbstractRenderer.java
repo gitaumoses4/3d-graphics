@@ -8,11 +8,6 @@ import com.graphics.engine.lighting.Light;
 import com.graphics.engine.models.RawModel;
 import com.graphics.engine.models.TexturedModel;
 import com.graphics.engine.shaders.ShaderProgram;
-import com.graphics.engine.shaders.StaticShader;
-import com.graphics.engine.textures.ModelTexture;
-import com.graphics.maths.Maths;
-import com.graphics.maths.Matrix4f;
-import com.graphics.maths.Vector3f;
 import org.lwjgl.opengl.*;
 
 import java.util.ArrayList;
@@ -69,8 +64,6 @@ public abstract class AbstractRenderer<T extends ShaderProgram> implements GameL
     @Override
     public void render(Window window) {
         this.window = window;
-        glEnable(GL_DEPTH_TEST);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.start();
         loadShaderVariables(shader, light, camera);
         entities.forEach(((texturedModel, entities) -> {
@@ -89,6 +82,10 @@ public abstract class AbstractRenderer<T extends ShaderProgram> implements GameL
         TexturedModel texturedModel = entity.getTexturedModel();
         List<Entity> batch = entities.computeIfAbsent(texturedModel, k -> new ArrayList<>());
         batch.add(entity);
+    }
+
+    public void processEntities(List<Entity> entities) {
+        entities.forEach(this::processEntity);
     }
 
     private void prepareTexturedModel(TexturedModel model) {
@@ -118,5 +115,10 @@ public abstract class AbstractRenderer<T extends ShaderProgram> implements GameL
 
     private void prepareInstance(Entity entity) {
         loadShaderVariables(shader, entity);
+    }
+
+    @Override
+    public void finish() {
+        shader.cleanUp();
     }
 }

@@ -11,13 +11,13 @@ import com.graphics.maths.Matrix4f;
 
 import static com.graphics.engine.shaders.StaticShader.*;
 
-public class StaticRenderer extends AbstractRenderer<StaticShader> {
+public class StaticRenderer<T extends StaticShader> extends AbstractRenderer<T> {
 
-    public StaticRenderer(StaticShader shader) {
+    public StaticRenderer(T shader) {
         super(shader);
     }
 
-    public StaticRenderer(StaticShader shader, Light light, Camera camera) {
+    public StaticRenderer(T shader, Light light, Camera camera) {
         super(shader, light, camera);
     }
 

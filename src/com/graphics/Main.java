@@ -2,12 +2,6 @@ package com.graphics;
 
 import com.graphics.engine.GameEngine;
 import com.graphics.engine.game.Game;
-import com.graphics.engine.renderer.AbstractRenderer;
-import com.graphics.engine.models.Model;
-import com.graphics.engine.renderer.StaticRenderer;
-import com.graphics.engine.shaders.StaticShader;
-import com.graphics.engine.Window;
-import com.graphics.maths.Vector3f;
 
 
 public class Main {

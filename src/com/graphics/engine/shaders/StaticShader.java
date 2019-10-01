@@ -26,6 +26,11 @@ public class StaticShader extends ShaderProgram {
         this.window = window;
     }
 
+    public StaticShader(Window window, String vertexShader, String fragmentShader) {
+        super(vertexShader, fragmentShader);
+        this.window = window;
+    }
+
     @Override
     protected void bindAttributes() {
         bindAttribute(0, "position");

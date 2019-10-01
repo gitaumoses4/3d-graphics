@@ -14,12 +14,20 @@ public class Camera implements MouseListener {
     private float yaw;
     private float roll;
 
+    public Camera(float x, float y, float z) {
+        this.position = new Vector3f(x, y, z);
+    }
+
+    public Camera() {
+
+    }
+
     public Vector3f getPosition() {
         return position;
     }
 
     public void move(Window window) {
-        float diff = 1f;
+        float diff = 0.3f;
         if (window.isKeyPressed(GLFW_KEY_W)) {
             position.z -= diff;
         } else if (window.isKeyPressed(GLFW_KEY_A)) {
@@ -32,6 +40,13 @@ public class Camera implements MouseListener {
             position.y += diff;
         } else if (window.isKeyPressed(GLFW_KEY_DOWN)) {
             position.y -= diff;
+        }
+        this.detectCollision();
+    }
+
+    public void detectCollision() {
+        if (position.y < 0) {
+            position.y = 0.1f;
         }
     }
 

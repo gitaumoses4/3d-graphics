@@ -9,7 +9,7 @@ import com.graphics.maths.Vector3f;
 public class Model {
 
     private TexturedModel texturedModel;
-    private final Loader loader = new Loader();
+    public Loader loader = new Loader();
 
 
     public Model(String modelFile) {
@@ -25,7 +25,19 @@ public class Model {
         this.initialize(rawModel, textureFile);
     }
 
-    private void initialize(RawModel rawModel, String texture) throws NullPointerException {
+    public Model(String textureFile, RawModel rawModel) {
+        this.initialize(rawModel, textureFile);
+    }
+
+    public Model() {
+
+    }
+
+    public void setLoader(Loader loader) {
+        this.loader = loader;
+    }
+
+    public void initialize(RawModel rawModel, String texture) throws NullPointerException {
         if (rawModel == null) {
             throw new NullPointerException("Unable to initialize model");
         } else {
@@ -40,5 +52,13 @@ public class Model {
 
     public Entity createEntity() {
         return new Entity(texturedModel, new Vector3f(0, 0, 0), 0, 0, 0, 1);
+    }
+
+    public Loader getLoader() {
+        return loader;
+    }
+
+    public void dispose() {
+        this.loader.cleanUp();
     }
 }
